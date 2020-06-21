@@ -23,7 +23,7 @@
 #include <ctype.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
-#include <FL/Fl_Text_Editor.H>
+#include <FL/Fl_Text_Editor2.H>
 #include "Fl_Screen_Driver.H"
 #include <FL/fl_ask.H>
 
@@ -69,8 +69,8 @@ key\modifier   plain  Ctrl   Alt  Meta
 */
 
 /**  The constructor creates a new text editor widget.*/
-Fl_Text_Editor::Fl_Text_Editor(int X, int Y, int W, int H,  const char* l)
-    : Fl_Text_Display(X, Y, W, H, l) {
+Fl_Text_Editor2::Fl_Text_Editor2(int X, int Y, int W, int H,  const char* l)
+    : Fl_Text_Display2(X, Y, W, H, l) {
   mCursorOn = 1;
   insert_mode_ = 1;
   key_bindings = 0;
@@ -85,68 +85,68 @@ Fl_Text_Editor::Fl_Text_Editor(int X, int Y, int W, int H,  const char* l)
 }
 
 #ifndef FL_DOXYGEN
-Fl_Text_Editor::Key_Binding* Fl_Text_Editor::global_key_bindings = 0;
+Fl_Text_Editor2::Key_Binding* Fl_Text_Editor2::global_key_bindings = 0;
 #endif
 
 // These are the default key bindings every widget should start with
 static struct {
   int key;
   int state;
-  Fl_Text_Editor::Key_Func func;
+  Fl_Text_Editor2::Key_Func func;
 } default_key_bindings[] = {
-  { FL_Escape,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_ignore     },
-  { FL_Enter,     FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_enter      },
-  { FL_KP_Enter,  FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_enter      },
-  { FL_BackSpace, FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_backspace  },
-  { FL_Insert,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_insert     },
-  { FL_Delete,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor::kf_delete     },
-  { FL_Home,      0,                        Fl_Text_Editor::kf_move       },
-  { FL_End,       0,                        Fl_Text_Editor::kf_move       },
-  { FL_Left,      0,                        Fl_Text_Editor::kf_move       },
-  { FL_Up,        0,                        Fl_Text_Editor::kf_move       },
-  { FL_Right,     0,                        Fl_Text_Editor::kf_move       },
-  { FL_Down,      0,                        Fl_Text_Editor::kf_move       },
-  { FL_Page_Up,   0,                        Fl_Text_Editor::kf_move       },
-  { FL_Page_Down, 0,                        Fl_Text_Editor::kf_move       },
-  { FL_Home,      FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_End,       FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Left,      FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Up,        FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Right,     FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Down,      FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Page_Up,   FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Page_Down, FL_SHIFT,                 Fl_Text_Editor::kf_shift_move },
-  { FL_Home,      FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_End,       FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Left,      FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Up,        FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Right,     FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Down,      FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Page_Up,   FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Page_Down, FL_CTRL,                  Fl_Text_Editor::kf_ctrl_move  },
-  { FL_Home,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_End,       FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Left,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Up,        FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Right,     FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Down,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Page_Up,   FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-  { FL_Page_Down, FL_CTRL|FL_SHIFT,         Fl_Text_Editor::kf_c_s_move   },
-//{ FL_Clear,	  0,                        Fl_Text_Editor::delete_to_eol },
-  { 'z',          FL_CTRL,                  Fl_Text_Editor::kf_undo	  },
-  { '/',          FL_CTRL,                  Fl_Text_Editor::kf_undo	  },
-  { 'x',          FL_CTRL,                  Fl_Text_Editor::kf_cut        },
-  { FL_Delete,    FL_SHIFT,                 Fl_Text_Editor::kf_cut        },
-  { 'c',          FL_CTRL,                  Fl_Text_Editor::kf_copy       },
-  { FL_Insert,    FL_CTRL,                  Fl_Text_Editor::kf_copy       },
-  { 'v',          FL_CTRL,                  Fl_Text_Editor::kf_paste      },
-  { FL_Insert,    FL_SHIFT,                 Fl_Text_Editor::kf_paste      },
-  { 'a',          FL_CTRL,                  Fl_Text_Editor::kf_select_all },
+  { FL_Escape,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_ignore     },
+  { FL_Enter,     FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_enter      },
+  { FL_KP_Enter,  FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_enter      },
+  { FL_BackSpace, FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_backspace  },
+  { FL_Insert,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_insert     },
+  { FL_Delete,    FL_TEXT_EDITOR_ANY_STATE, Fl_Text_Editor2::kf_delete     },
+  { FL_Home,      0,                        Fl_Text_Editor2::kf_move       },
+  { FL_End,       0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Left,      0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Up,        0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Right,     0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Down,      0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Page_Up,   0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Page_Down, 0,                        Fl_Text_Editor2::kf_move       },
+  { FL_Home,      FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_End,       FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Left,      FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Up,        FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Right,     FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Down,      FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Page_Up,   FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Page_Down, FL_SHIFT,                 Fl_Text_Editor2::kf_shift_move },
+  { FL_Home,      FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_End,       FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Left,      FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Up,        FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Right,     FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Down,      FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Page_Up,   FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Page_Down, FL_CTRL,                  Fl_Text_Editor2::kf_ctrl_move  },
+  { FL_Home,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_End,       FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Left,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Up,        FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Right,     FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Down,      FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Page_Up,   FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+  { FL_Page_Down, FL_CTRL|FL_SHIFT,         Fl_Text_Editor2::kf_c_s_move   },
+//{ FL_Clear,	  0,                        Fl_Text_Editor2::delete_to_eol },
+  { 'z',          FL_CTRL,                  Fl_Text_Editor2::kf_undo	  },
+  { '/',          FL_CTRL,                  Fl_Text_Editor2::kf_undo	  },
+  { 'x',          FL_CTRL,                  Fl_Text_Editor2::kf_cut        },
+  { FL_Delete,    FL_SHIFT,                 Fl_Text_Editor2::kf_cut        },
+  { 'c',          FL_CTRL,                  Fl_Text_Editor2::kf_copy       },
+  { FL_Insert,    FL_CTRL,                  Fl_Text_Editor2::kf_copy       },
+  { 'v',          FL_CTRL,                  Fl_Text_Editor2::kf_paste      },
+  { FL_Insert,    FL_SHIFT,                 Fl_Text_Editor2::kf_paste      },
+  { 'a',          FL_CTRL,                  Fl_Text_Editor2::kf_select_all },
   { 0,            0,                        0                             }
 };
 
 /**  Adds all of the default editor key bindings to the specified key binding list.*/
-void Fl_Text_Editor::add_default_key_bindings(Key_Binding** list) {
+void Fl_Text_Editor2::add_default_key_bindings(Key_Binding** list) {
   for (int i = 0; default_key_bindings[i].key; i++) {
     add_key_binding(default_key_bindings[i].key,
                     default_key_bindings[i].state,
@@ -165,7 +165,7 @@ void Fl_Text_Editor::add_default_key_bindings(Key_Binding** list) {
 }
 
 /**  Returns the function associated with a key binding.*/
-Fl_Text_Editor::Key_Func Fl_Text_Editor::bound_key_function(int key, int state, Key_Binding* list) const {
+Fl_Text_Editor2::Key_Func Fl_Text_Editor2::bound_key_function(int key, int state, Key_Binding* list) const {
   Key_Binding* cur;
   for (cur = list; cur; cur = cur->next)
     if (cur->key == key)
@@ -176,7 +176,7 @@ Fl_Text_Editor::Key_Func Fl_Text_Editor::bound_key_function(int key, int state, 
 }
 
 /**  Removes all of the key bindings associated with the text editor or list.*/
-void Fl_Text_Editor::remove_all_key_bindings(Key_Binding** list) {
+void Fl_Text_Editor2::remove_all_key_bindings(Key_Binding** list) {
   Key_Binding *cur, *next;
   for (cur = *list; cur; cur = next) {
     next = cur->next;
@@ -190,9 +190,9 @@ void Fl_Text_Editor::remove_all_key_bindings(Key_Binding** list) {
 
     This can be used in derived classes to remove global key bindings
     by using the global (static) Key_Binding list
-    Fl_Text_Editor::global_key_bindings.
+    Fl_Text_Editor2::global_key_bindings.
 */
-void Fl_Text_Editor::remove_key_binding(int key, int state, Key_Binding** list) {
+void Fl_Text_Editor2::remove_key_binding(int key, int state, Key_Binding** list) {
   Key_Binding *cur, *last = 0;
   for (cur = *list; cur; last = cur, cur = cur->next)
     if (cur->key == key && cur->state == state) break;
@@ -207,9 +207,9 @@ void Fl_Text_Editor::remove_key_binding(int key, int state, Key_Binding** list) 
 
     This can be used in derived classes to add global key bindings
     by using the global (static) Key_Binding list
-    Fl_Text_Editor::global_key_bindings.
+    Fl_Text_Editor2::global_key_bindings.
 */
-void Fl_Text_Editor::add_key_binding(int key, int state, Key_Func function,
+void Fl_Text_Editor2::add_key_binding(int key, int state, Key_Func function,
                                 Key_Binding** list) {
   Key_Binding* kb = new Key_Binding;
   kb->key = key;
@@ -221,7 +221,7 @@ void Fl_Text_Editor::add_key_binding(int key, int state, Key_Func function,
 
 ////////////////////////////////////////////////////////////////
 
-static void kill_selection(Fl_Text_Editor* e) {
+static void kill_selection(Fl_Text_Editor2* e) {
   if (e->buffer()->selected()) {
     e->insert_position(e->buffer()->primary_selection()->start());
     e->buffer()->remove_selection();
@@ -231,7 +231,7 @@ static void kill_selection(Fl_Text_Editor* e) {
 /** Inserts the text associated with key \p 'c' in editor \p 'e'.
     Honors the current selection and insert/overstrike mode.
 */
-int Fl_Text_Editor::kf_default(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_default(int c, Fl_Text_Editor2* e) {
   // FIXME: this function is a mess! Fix this!
   if (!c || (!isprint(c) && c != '\t')) return 0;
   char s[2] = "\0";
@@ -252,7 +252,7 @@ int Fl_Text_Editor::kf_default(int c, Fl_Text_Editor* e) {
     An example would be disabling FL_Escape, so that it isn't added
     to the buffer when invoked by the user.
 */
-int Fl_Text_Editor::kf_ignore(int, Fl_Text_Editor*) {
+int Fl_Text_Editor2::kf_ignore(int, Fl_Text_Editor2*) {
   return 0; // don't handle
 }
 
@@ -261,7 +261,7 @@ int Fl_Text_Editor::kf_ignore(int, Fl_Text_Editor*) {
     Otherwise, the character left is deleted and the cursor moved.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_backspace(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_backspace(int, Fl_Text_Editor2* e) {
   if (!e->buffer()->selected() && e->move_left()) {
     int p1 = e->insert_position();
     int p2 = e->buffer()->next_char(p1);
@@ -277,7 +277,7 @@ int Fl_Text_Editor::kf_backspace(int, Fl_Text_Editor* e) {
 /** Inserts a newline for key \p 'c' at the current cursor position in editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_enter(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_enter(int, Fl_Text_Editor2* e) {
   kill_selection(e);
   e->insert("\n");
   e->show_insert_position();
@@ -286,7 +286,7 @@ int Fl_Text_Editor::kf_enter(int, Fl_Text_Editor* e) {
   return 1;
 }
 
-extern void fl_text_drag_me(int pos, Fl_Text_Display* d);
+extern void fl_text_drag_me(int pos, Fl_Text_Display2* d);
 /** Moves the text cursor in the direction indicated by key \p 'c' in editor \p 'e'.
     Supported values for 'c' are currently:
     \code
@@ -300,7 +300,7 @@ extern void fl_text_drag_me(int pos, Fl_Text_Display* d);
         FL_Page_Down -- moves the cursor down one page
     \endcode
 */
-int Fl_Text_Editor::kf_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_move(int c, Fl_Text_Editor2* e) {
   int i;
   int selected = e->buffer()->selected();
   if (!selected)
@@ -340,7 +340,7 @@ int Fl_Text_Editor::kf_move(int c, Fl_Text_Editor* e) {
 /** Extends the current selection in the direction of key \p 'c' in editor \p 'e'.
     \see kf_move()
 */
-int Fl_Text_Editor::kf_shift_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_shift_move(int c, Fl_Text_Editor2* e) {
   kf_move(c, e);
   fl_text_drag_me(e->insert_position(), e);
   char *copy = e->buffer()->selection_text();
@@ -364,7 +364,7 @@ int Fl_Text_Editor::kf_shift_move(int c, Fl_Text_Editor* e) {
         FL_Page_Down -- moves the cursor to the beginning of the last line on the current page
     \endcode
 */
-int Fl_Text_Editor::kf_ctrl_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_ctrl_move(int c, Fl_Text_Editor2* e) {
   if (!e->buffer()->selected())
     e->dragPos = e->insert_position();
   if (c != FL_Up && c != FL_Down) {
@@ -412,7 +412,7 @@ int Fl_Text_Editor::kf_ctrl_move(int c, Fl_Text_Editor* e) {
         FL_Right     -- moves the cursor to the end of the current line
     \endcode
 */
-int Fl_Text_Editor::kf_meta_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_meta_move(int c, Fl_Text_Editor2* e) {
   if (!e->buffer()->selected())
     e->dragPos = e->insert_position();
   if (c != FL_Up && c != FL_Down) {
@@ -442,7 +442,7 @@ int Fl_Text_Editor::kf_meta_move(int c, Fl_Text_Editor* e) {
 /** Extends the current selection in the direction indicated by meta key \p 'c' in editor \p 'e'.
     \see kf_meta_move().
 */
-int Fl_Text_Editor::kf_m_s_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_m_s_move(int c, Fl_Text_Editor2* e) {
   kf_meta_move(c, e);
   fl_text_drag_me(e->insert_position(), e);
   return 1;
@@ -451,7 +451,7 @@ int Fl_Text_Editor::kf_m_s_move(int c, Fl_Text_Editor* e) {
 /** Extends the current selection in the direction indicated by control key \p 'c' in editor \p 'e'.
     \see kf_ctrl_move().
 */
-int Fl_Text_Editor::kf_c_s_move(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_c_s_move(int c, Fl_Text_Editor2* e) {
   kf_ctrl_move(c, e);
   fl_text_drag_me(e->insert_position(), e);
   return 1;
@@ -461,7 +461,7 @@ int Fl_Text_Editor::kf_c_s_move(int c, Fl_Text_Editor* e) {
     Same as kf_move(FL_Home, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_home(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_home(int, Fl_Text_Editor2* e) {
     return kf_move(FL_Home, e);
 }
 
@@ -469,7 +469,7 @@ int Fl_Text_Editor::kf_home(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_End, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_end(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_end(int, Fl_Text_Editor2* e) {
   return kf_move(FL_End, e);
 }
 
@@ -477,7 +477,7 @@ int Fl_Text_Editor::kf_end(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Left, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_left(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_left(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Left, e);
 }
 
@@ -485,7 +485,7 @@ int Fl_Text_Editor::kf_left(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Up, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_up(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_up(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Up, e);
 }
 
@@ -493,7 +493,7 @@ int Fl_Text_Editor::kf_up(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Right, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_right(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_right(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Right, e);
 }
 
@@ -501,7 +501,7 @@ int Fl_Text_Editor::kf_right(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Down, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_down(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_down(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Down, e);
 }
 
@@ -509,7 +509,7 @@ int Fl_Text_Editor::kf_down(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Page_Up, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_page_up(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_page_up(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Page_Up, e);
 }
 
@@ -517,14 +517,14 @@ int Fl_Text_Editor::kf_page_up(int, Fl_Text_Editor* e) {
     Same as kf_move(FL_Page_Down, e).
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_page_down(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_page_down(int, Fl_Text_Editor2* e) {
   return kf_move(FL_Page_Down, e);
 }
 
 /** Toggles the insert mode for editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_insert(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_insert(int, Fl_Text_Editor2* e) {
   e->insert_mode(e->insert_mode() ? 0 : 1);
   return 1;
 }
@@ -532,7 +532,7 @@ int Fl_Text_Editor::kf_insert(int, Fl_Text_Editor* e) {
 /** Does a delete of selected text or the current character in the current buffer of editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_delete(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_delete(int, Fl_Text_Editor2* e) {
   if (!e->buffer()->selected()) {
     int p1 = e->insert_position();
     int p2 = e->buffer()->next_char(p1);
@@ -549,7 +549,7 @@ int Fl_Text_Editor::kf_delete(int, Fl_Text_Editor* e) {
 /** Does a copy of selected text or the current character in the current buffer of editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_copy(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_copy(int, Fl_Text_Editor2* e) {
   if (!e->buffer()->selected()) return 1;
   const char *copy = e->buffer()->selection_text();
   if (*copy) Fl::copy(copy, (int) strlen(copy), 1);
@@ -561,7 +561,7 @@ int Fl_Text_Editor::kf_copy(int, Fl_Text_Editor* e) {
 /** Does a cut of selected text in the current buffer of editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_cut(int c, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_cut(int c, Fl_Text_Editor2* e) {
   kf_copy(c, e);
   kill_selection(e);
   e->set_changed();
@@ -573,7 +573,7 @@ int Fl_Text_Editor::kf_cut(int c, Fl_Text_Editor* e) {
     Any current selection is replaced with the pasted content.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_paste(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_paste(int, Fl_Text_Editor2* e) {
   kill_selection(e);
   Fl::paste(*e, 1);
   e->show_insert_position();
@@ -585,7 +585,7 @@ int Fl_Text_Editor::kf_paste(int, Fl_Text_Editor* e) {
 /** Selects all text in the current buffer in editor \p 'e'.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_select_all(int, Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_select_all(int, Fl_Text_Editor2* e) {
   e->buffer()->select(0, e->buffer()->length());
   const char *copy = e->buffer()->selection_text();
   if (*copy) Fl::copy(copy, (int) strlen(copy), 0);
@@ -597,7 +597,7 @@ int Fl_Text_Editor::kf_select_all(int, Fl_Text_Editor* e) {
     Also deselects previous selection.
     The key value \p 'c' is currently unused.
 */
-int Fl_Text_Editor::kf_undo(int , Fl_Text_Editor* e) {
+int Fl_Text_Editor2::kf_undo(int , Fl_Text_Editor2* e) {
   e->buffer()->unselect();
   Fl::copy("", 0, 0);
   int crsr;
@@ -610,7 +610,7 @@ int Fl_Text_Editor::kf_undo(int , Fl_Text_Editor* e) {
 }
 
 /** Handles a key press in the editor */
-int Fl_Text_Editor::handle_key() {
+int Fl_Text_Editor2::handle_key() {
   // Call FLTK's rules to try to turn this into a printing character.
   // This uses the right-hand ctrl key as a "compose prefix" and returns
   // the changes that should be made to the text, as a number of
@@ -649,13 +649,13 @@ int Fl_Text_Editor::handle_key() {
 }
 
 /** does or does not a callback according to changed() and when() settings */
-void Fl_Text_Editor::maybe_do_callback() {
-//  printf("Fl_Text_Editor::maybe_do_callback()\n");
+void Fl_Text_Editor2::maybe_do_callback() {
+//  printf("Fl_Text_Editor2::maybe_do_callback()\n");
 //  printf("changed()=%d, when()=%x\n", changed(), when());
   if (changed() || (when()&FL_WHEN_NOT_CHANGED)) do_callback();
 }
 
-int Fl_Text_Editor::handle(int event) {
+int Fl_Text_Editor2::handle(int event) {
   static int dndCursorPos;
   
   if (!buffer()) return 0;
@@ -749,19 +749,19 @@ int Fl_Text_Editor::handle(int event) {
       return 1;
   }
 
-  return Fl_Text_Display::handle(event);
+  return Fl_Text_Display2::handle(event);
 }
 
 /**
 Enables or disables Tab key focus navigation.
 
 When disabled (default), tab characters are inserted into
-Fl_Text_Editor. Only the mouse can change focus.  This behavior is
-desireable when Fl_Text_Editor is used, e.g. in a source code editor.
+Fl_Text_Editor2. Only the mouse can change focus.  This behavior is
+desireable when Fl_Text_Editor2 is used, e.g. in a source code editor.
 
 When enabled, Tab navigates focus to the next widget, and Shift-Tab
 navigates focus to the previous widget. This behavior is desireable
-when Fl_Text_Editor is used e.g. in a database input form.
+when Fl_Text_Editor2 is used e.g. in a database input form.
 
 Currently, this method is implemented as a convenience method
 that adjusts the key bindings for the Tab key. This implementation
@@ -774,7 +774,7 @@ key bindings for Tab and Shift-Tab may affect tab navigation.
 \see tab_nav(), Fl::OPTION_ARROW_FOCUS.
 \version 1.3.4 ABI feature
 */
-void Fl_Text_Editor::tab_nav(int val) {
+void Fl_Text_Editor2::tab_nav(int val) {
   if ( val )
     add_key_binding(FL_Tab, 0, kf_ignore);
   else
@@ -797,7 +797,7 @@ and Shift-Tab navigates focus to the previous widget.
 \see tab_nav(int), Fl::OPTION_ARROW_FOCUS.
 \version 1.3.4 ABI feature
 */
-int Fl_Text_Editor::tab_nav() const {
+int Fl_Text_Editor2::tab_nav() const {
   return (bound_key_function(FL_Tab,0)==kf_ignore) ? 1 : 0;
 }
 

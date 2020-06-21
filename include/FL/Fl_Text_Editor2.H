@@ -1,7 +1,7 @@
 //
 // "$Id$"
 //
-// Header file for Fl_Text_Editor class.
+// Header file for Fl_Text_Editor2 class.
 //
 // Copyright 2001-2010 by Bill Spitzak and others.
 // Original code Copyright Mark Edel.  Permission to distribute under
@@ -19,13 +19,13 @@
 //
 
 /* \file
-   Fl_Text_Editor widget . */
+   Fl_Text_Editor2 widget . */
 
 
-#ifndef FL_TEXT_EDITOR_H
-#define FL_TEXT_EDITOR_H
+#ifndef FL_TEXT_EDITOR2_H
+#define FL_TEXT_EDITOR2_H
 
-#include "Fl_Text_Display.H"
+#include "Fl_Text_Display2.H"
 
 // key will match in any state
 #define FL_TEXT_EDITOR_ANY_STATE  (-1L)
@@ -37,10 +37,10 @@
   and scrolling. The buffer that is displayed in the widget is managed
   by the Fl_Text_Buffer class.
 */
-class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
+class FL_EXPORT Fl_Text_Editor2 : public Fl_Text_Display2 {
   public:
     /** Key function binding callback type. */
-    typedef int (*Key_Func)(int key, Fl_Text_Editor* editor);
+    typedef int (*Key_Func)(int key, Fl_Text_Editor2* editor);
 
     /** Simple linked list item associating a key/state to a function. */
     struct Key_Binding {
@@ -50,8 +50,8 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
       Key_Binding* next;	///< next key binding in the list
     };
 
-    Fl_Text_Editor(int X, int Y, int W, int H, const char* l = 0);
-    ~Fl_Text_Editor() { remove_all_key_bindings(); }
+    Fl_Text_Editor2(int X, int Y, int W, int H, const char* l = 0);
+    ~Fl_Text_Editor2() { remove_all_key_bindings(); }
     virtual int handle(int e);
     /**
 	Sets the current insert mode; if non-zero, new text
@@ -87,31 +87,31 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
     void default_key_function(Key_Func f) { default_key_function_ = f; }
 
     // functions for the built in default bindings
-    static int kf_default(int c, Fl_Text_Editor* e);
-    static int kf_ignore(int c, Fl_Text_Editor* e);
-    static int kf_backspace(int c, Fl_Text_Editor* e);
-    static int kf_enter(int c, Fl_Text_Editor* e);
-    static int kf_move(int c, Fl_Text_Editor* e);
-    static int kf_shift_move(int c, Fl_Text_Editor* e);
-    static int kf_ctrl_move(int c, Fl_Text_Editor* e);
-    static int kf_c_s_move(int c, Fl_Text_Editor* e);
-    static int kf_meta_move(int c, Fl_Text_Editor* e);
-    static int kf_m_s_move(int c, Fl_Text_Editor* e);
-    static int kf_home(int, Fl_Text_Editor* e);
-    static int kf_end(int c, Fl_Text_Editor* e);
-    static int kf_left(int c, Fl_Text_Editor* e);
-    static int kf_up(int c, Fl_Text_Editor* e);
-    static int kf_right(int c, Fl_Text_Editor* e);
-    static int kf_down(int c, Fl_Text_Editor* e);
-    static int kf_page_up(int c, Fl_Text_Editor* e);
-    static int kf_page_down(int c, Fl_Text_Editor* e);
-    static int kf_insert(int c, Fl_Text_Editor* e);
-    static int kf_delete(int c, Fl_Text_Editor* e);
-    static int kf_copy(int c, Fl_Text_Editor* e);
-    static int kf_cut(int c, Fl_Text_Editor* e);
-    static int kf_paste(int c, Fl_Text_Editor* e);
-    static int kf_select_all(int c, Fl_Text_Editor* e);
-    static int kf_undo(int c, Fl_Text_Editor* e);
+    static int kf_default(int c, Fl_Text_Editor2* e);
+    static int kf_ignore(int c, Fl_Text_Editor2* e);
+    static int kf_backspace(int c, Fl_Text_Editor2* e);
+    static int kf_enter(int c, Fl_Text_Editor2* e);
+    static int kf_move(int c, Fl_Text_Editor2* e);
+    static int kf_shift_move(int c, Fl_Text_Editor2* e);
+    static int kf_ctrl_move(int c, Fl_Text_Editor2* e);
+    static int kf_c_s_move(int c, Fl_Text_Editor2* e);
+    static int kf_meta_move(int c, Fl_Text_Editor2* e);
+    static int kf_m_s_move(int c, Fl_Text_Editor2* e);
+    static int kf_home(int, Fl_Text_Editor2* e);
+    static int kf_end(int c, Fl_Text_Editor2* e);
+    static int kf_left(int c, Fl_Text_Editor2* e);
+    static int kf_up(int c, Fl_Text_Editor2* e);
+    static int kf_right(int c, Fl_Text_Editor2* e);
+    static int kf_down(int c, Fl_Text_Editor2* e);
+    static int kf_page_up(int c, Fl_Text_Editor2* e);
+    static int kf_page_down(int c, Fl_Text_Editor2* e);
+    static int kf_insert(int c, Fl_Text_Editor2* e);
+    static int kf_delete(int c, Fl_Text_Editor2* e);
+    static int kf_copy(int c, Fl_Text_Editor2* e);
+    static int kf_cut(int c, Fl_Text_Editor2* e);
+    static int kf_paste(int c, Fl_Text_Editor2* e);
+    static int kf_select_all(int c, Fl_Text_Editor2* e);
+    static int kf_undo(int c, Fl_Text_Editor2* e);
 
   protected:
     int handle_key();
@@ -124,7 +124,7 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
 
     /** Global key binding list.
 
-      Derived classes can add key bindings for all Fl_Text_Editor widgets
+      Derived classes can add key bindings for all Fl_Text_Editor2 widgets
       by adding a Key_Binding to this list.
 
       \see add_key_binding(int key, int state, Key_Func f, Key_Binding** list);

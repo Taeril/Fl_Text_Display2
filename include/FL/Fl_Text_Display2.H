@@ -1,7 +1,7 @@
 //
 // "$Id$"
 //
-// Header file for Fl_Text_Display class.
+// Header file for Fl_Text_Display2 class.
 //
 // Copyright 2001-2020 by Bill Spitzak and others.
 // Original code Copyright Mark Edel.  Permission to distribute under
@@ -19,10 +19,10 @@
 //
 
 /* \file
- Fl_Text_Display widget . */
+ Fl_Text_Display2 widget . */
 
-#ifndef FL_TEXT_DISPLAY_H
-#define FL_TEXT_DISPLAY_H
+#ifndef FL_TEXT_DISPLAY2_H
+#define FL_TEXT_DISPLAY2_H
 
 #include <FL/Fl.H>		// Fl::scrollbar_size()
 #include "fl_draw.H"
@@ -41,11 +41,11 @@
  class. A single Text Buffer can be displayed by multiple Text
  Displays.
 
- \image html editor.png "Fl_Text_Display widget"
- \image latex editor.png "Fl_Text_Display widget" width=6cm
+ \image html editor.png "Fl_Text_Display2 widget"
+ \image latex editor.png "Fl_Text_Display2 widget" width=6cm
  <BR><BR>
- \image html editor-linenumbers.png "Fl_Text_Display widget with line numbers enabled"
- \image latex editor-linenumbers.png "Fl_Text_Display widget with line numbers enabled" width=6cm
+ \image html editor-linenumbers.png "Fl_Text_Display2 widget with line numbers enabled"
+ \image latex editor-linenumbers.png "Fl_Text_Display2 widget with line numbers enabled" width=6cm
 
  \b Example \b Use
  \code
@@ -54,7 +54,7 @@
      int main() {
          ..
          Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-         Fl_Text_Display *disp = new Fl_Text_Display(10, 10, 640, 480);
+         Fl_Text_Display2 *disp = new Fl_Text_Display2(10, 10, 640, 480);
          disp->buffer(buff);                 // attach text buffer to display widget
          buff->text("line one\nline two");   // add some text to buffer
 	 ..
@@ -77,7 +77,7 @@
  \note Line numbers were added in FLTK 1.3.3.
  \see Fl_Widget::shortcut_label(int)
  */
-class FL_EXPORT Fl_Text_Display: public Fl_Group {
+class FL_EXPORT Fl_Text_Display2: public Fl_Group {
 
 public:
   
@@ -126,7 +126,7 @@ public:
     WRAP_AT_BOUNDS  /**< wrap text so that it fits into the widget width */
   };    
   
-  friend void fl_text_drag_me(int pos, Fl_Text_Display* d);
+  friend void fl_text_drag_me(int pos, Fl_Text_Display2* d);
   
   typedef void (*Unfinished_Style_Cb)(int, void *);
   
@@ -135,13 +135,13 @@ public:
    with an attribute mask matching attr.
 
    There must be one entry for each style that can be used in an
-   Fl_Text_Display for displaying text. The style table is an array of
+   Fl_Text_Display2 for displaying text. The style table is an array of
    struct Style_Table_Entry.
 
-   The style table is associated with an Fl_Text_Display by using
-   Fl_Text_Display::highlight_data().
+   The style table is associated with an Fl_Text_Display2 by using
+   Fl_Text_Display2::highlight_data().
 
-   \see Fl_Text_Display::highlight_data()
+   \see Fl_Text_Display2::highlight_data()
    */
   struct Style_Table_Entry {
     Fl_Color    color;	///< text color
@@ -150,8 +150,8 @@ public:
     unsigned    attr;	///< currently unused (this may be changed in the future)
   };
   
-  Fl_Text_Display(int X, int Y, int W, int H, const char *l = 0);
-  ~Fl_Text_Display();
+  Fl_Text_Display2(int X, int Y, int W, int H, const char *l = 0);
+  ~Fl_Text_Display2();
   
   virtual int handle(int e);
   
@@ -161,7 +161,7 @@ public:
    Sets the current text buffer associated with the text widget.
    Multiple text widgets can be associated with the same text buffer.
    \param buf new text buffer
-   \see Fl_Text_Display::buffer(Fl_Text_Buffer* buf)
+   \see Fl_Text_Display2::buffer(Fl_Text_Buffer* buf)
    */
   void buffer(Fl_Text_Buffer& buf) { buffer(&buf); }
   
@@ -169,8 +169,8 @@ public:
    Gets the current text buffer associated with the text widget.
    Multiple text widgets can be associated with the same text buffer.
    \return current text buffer
-   \see Fl_Text_Display::buffer(Fl_Text_Buffer* buf)
-   \see Fl_Text_Display::buffer(Fl_Text_Buffer& buf)
+   \see Fl_Text_Display2::buffer(Fl_Text_Buffer* buf)
+   \see Fl_Text_Display2::buffer(Fl_Text_Buffer& buf)
    */
   Fl_Text_Buffer* buffer() const { return mBuffer; }
   
@@ -464,8 +464,8 @@ protected:
                                  int nRestyled, const char* deletedText,
                                  void* cbArg);
   
-  static void h_scrollbar_cb(Fl_Scrollbar* w, Fl_Text_Display* d);
-  static void v_scrollbar_cb( Fl_Scrollbar* w, Fl_Text_Display* d);
+  static void h_scrollbar_cb(Fl_Scrollbar* w, Fl_Text_Display2* d);
+  static void v_scrollbar_cb( Fl_Scrollbar* w, Fl_Text_Display2* d);
   void update_v_scrollbar();
   void update_h_scrollbar();
   int measure_vline(int visLineNum) const;
