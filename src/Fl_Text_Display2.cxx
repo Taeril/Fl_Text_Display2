@@ -29,7 +29,7 @@
 #include <FL/Fl.H>
 #include <FL/platform.H>
 #include <FL/Fl_Text_Buffer.H>
-#include <FL/Fl_Text_Display2.H>
+#include "FL/Fl_Text_Display2.H"
 #include <FL/Fl_Window.H>
 #include "Fl_Screen_Driver.H"
 

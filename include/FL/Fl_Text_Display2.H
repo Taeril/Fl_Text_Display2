@@ -25,11 +25,11 @@
 #define FL_TEXT_DISPLAY2_H
 
 #include <FL/Fl.H>		// Fl::scrollbar_size()
-#include "fl_draw.H"
-#include "Fl_Group.H"
-#include "Fl_Widget.H"
-#include "Fl_Scrollbar.H"
-#include "Fl_Text_Buffer.H"
+#include <FL/fl_draw.H>
+#include <FL/Fl_Group.H>
+#include <FL/Fl_Widget.H>
+#include <FL/Fl_Scrollbar.H>
+#include <FL/Fl_Text_Buffer.H>
 
 /**
  \brief Rich text display widget.

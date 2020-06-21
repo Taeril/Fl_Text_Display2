@@ -23,7 +23,7 @@
 #include <ctype.h>
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
-#include <FL/Fl_Text_Editor2.H>
+#include "FL/Fl_Text_Editor2.H"
 #include "Fl_Screen_Driver.H"
 #include <FL/fl_ask.H>
 
