@@ -284,6 +284,7 @@ style_parse(const char *text,
     last = isalnum((*text)&255) || *text == '_' || *text == '.';
 
     if (*text == '\n') {
+      if(current == 'E') style[-1] = 'A'; // change style for '\n' after directives to plain
       // Reset column and possibly reset the style
       col = 0;
       if (current == 'B' || current == 'E') current = 'A';
