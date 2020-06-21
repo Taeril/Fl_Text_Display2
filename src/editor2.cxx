@@ -39,7 +39,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Text_Buffer.H>
-#include <FL/Fl_Text_Editor.H>
+#include <FL/Fl_Text_Editor2.H>
 #include <FL/filename.H>
 
 int                changed = 0;
@@ -52,12 +52,12 @@ const int line_num_width = 75;
 
 // #define DEV_TEST		// uncomment this line ...
 // ... to enable additional test features for developers,
-// particularly to test Fl_Text_Display and/or Fl_Text_Editor.
+// particularly to test Fl_Text_Display2 and/or Fl_Text_Editor2.
 
 // Syntax highlighting stuff...
 #define TS 14 // default editor textsize
 Fl_Text_Buffer     *stylebuf = 0;
-Fl_Text_Display::Style_Table_Entry
+Fl_Text_Display2::Style_Table_Entry
                    styletable[] = {	// Style table
 		     { FL_BLACK,      FL_COURIER,           TS }, // A - Plain
 		     { FL_DARK_GREEN, FL_HELVETICA_ITALIC,  TS }, // B - Line comments
@@ -389,7 +389,7 @@ style_update(int        pos,		// I - Position of update
 //         style, style[end - start - 1]);
 
   stylebuf->replace(start, end, style);
-  ((Fl_Text_Editor *)cbArg)->redisplay_range(start, end);
+  ((Fl_Text_Editor2 *)cbArg)->redisplay_range(start, end);
 
   if (start==end || last != style[end - start - 1]) {
 //    printf("Recalculate the rest of the buffer style\n");
@@ -406,7 +406,7 @@ style_update(int        pos,		// I - Position of update
     style_parse(text, style, end - start);
 
     stylebuf->replace(start, end, style);
-    ((Fl_Text_Editor *)cbArg)->redisplay_range(start, end);
+    ((Fl_Text_Editor2 *)cbArg)->redisplay_range(start, end);
   }
 
   free(text);
@@ -447,7 +447,7 @@ class EditorWindow : public Fl_Double_Window {
     int			wrap_mode;
     int			line_numbers;
 
-    Fl_Text_Editor     *editor;
+    Fl_Text_Editor2    *editor;
     char               search[256];
 };
 
@@ -497,7 +497,7 @@ void resize_cb(Fl_Widget *b, void *v) {
 
 void scroll_cb(Fl_Widget *b, void *v) {
   EditorWindow *ew = (EditorWindow*)b->parent();
-  Fl_Text_Editor *ed = ew->editor;
+  Fl_Text_Editor2 *ed = ew->editor;
   int n = (int)(long)v;
   int align = ed->scrollbar_align();
 
@@ -530,18 +530,18 @@ void scroll_cb(Fl_Widget *b, void *v) {
 
 void wrap_cb(Fl_Widget *w, void* v) {
   EditorWindow* ew = (EditorWindow*)v;
-  Fl_Text_Editor *ed = (Fl_Text_Editor*)ew->editor;
+  Fl_Text_Editor2 *ed = (Fl_Text_Editor2*)ew->editor;
   ew->wrap_mode = 1 - ew->wrap_mode;
   if (ew->wrap_mode)
-    ed->wrap_mode(Fl_Text_Display::WRAP_AT_BOUNDS, 0);
+    ed->wrap_mode(Fl_Text_Display2::WRAP_AT_BOUNDS, 0);
   else
-    ed->wrap_mode(Fl_Text_Display::WRAP_NONE, 0);
+    ed->wrap_mode(Fl_Text_Display2::WRAP_NONE, 0);
   ew->redraw();
 }
 
 void lnum_cb(Fl_Widget *w, void* v) {
   EditorWindow* ew = (EditorWindow*)v;
-  Fl_Text_Editor *ed = (Fl_Text_Editor*)ew->editor;
+  Fl_Text_Editor2 *ed = (Fl_Text_Editor2*)ew->editor;
   ew->line_numbers = 1 - ew->line_numbers;
   if (ew->line_numbers) {
     ed->linenumber_width(line_num_width);	// enable
@@ -598,12 +598,12 @@ void save_file(const char *newfile) {
 
 void copy_cb(Fl_Widget*, void* v) {
   EditorWindow* e = (EditorWindow*)v;
-  Fl_Text_Editor::kf_copy(0, e->editor);
+  Fl_Text_Editor2::kf_copy(0, e->editor);
 }
 
 void cut_cb(Fl_Widget*, void* v) {
   EditorWindow* e = (EditorWindow*)v;
-  Fl_Text_Editor::kf_cut(0, e->editor);
+  Fl_Text_Editor2::kf_cut(0, e->editor);
 }
 
 void delete_cb(Fl_Widget*, void*) {
@@ -629,9 +629,9 @@ void wordwrap_cb(Fl_Widget *w, void* v) {
   Fl_Menu_Bar* m = (Fl_Menu_Bar*)w;
   const Fl_Menu_Item* i = m->mvalue();
   if ( i->value() )
-    e->editor->wrap_mode(Fl_Text_Display::WRAP_AT_BOUNDS, 0);
+    e->editor->wrap_mode(Fl_Text_Display2::WRAP_AT_BOUNDS, 0);
   else
-    e->editor->wrap_mode(Fl_Text_Display::WRAP_NONE, 0);
+    e->editor->wrap_mode(Fl_Text_Display2::WRAP_NONE, 0);
   e->wrap_mode = (i->value()?1:0);
   e->redraw();
 }
@@ -722,7 +722,7 @@ void insert_cb(Fl_Widget*, void *v) {
 
 void paste_cb(Fl_Widget*, void* v) {
   EditorWindow* e = (EditorWindow*)v;
-  Fl_Text_Editor::kf_paste(0, e->editor);
+  Fl_Text_Editor2::kf_paste(0, e->editor);
 }
 
 int num_windows = 0;
@@ -898,10 +898,10 @@ Fl_Window* new_view() {
     w->begin();
     Fl_Menu_Bar* m = new Fl_Menu_Bar(0, 0, 660, 30);
     m->copy(menuitems, w);
-    w->editor = new Fl_Text_Editor(0, 30, 660, 370);
+    w->editor = new Fl_Text_Editor2(0, 30, 660, 370);
     w->editor->textfont(FL_COURIER);
     w->editor->textsize(TS);
-  //w->editor->wrap_mode(Fl_Text_Editor::WRAP_AT_BOUNDS, 250);
+  //w->editor->wrap_mode(Fl_Text_Editor2::WRAP_AT_BOUNDS, 250);
     w->editor->buffer(textbuf);
     w->editor->highlight_data(stylebuf, styletable,
                               sizeof(styletable) / sizeof(styletable[0]),
