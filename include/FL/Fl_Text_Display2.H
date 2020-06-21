@@ -144,7 +144,8 @@ public:
    \see Fl_Text_Display2::highlight_data()
    */
   struct Style_Table_Entry {
-    Fl_Color    color;	///< text color
+    Fl_Color    color_fg;	///< text color
+    Fl_Color    color_bg;	///< background color
     Fl_Font     font;	///< text font
     Fl_Fontsize size;	///< text font size
     unsigned    attr;	///< currently unused (this may be changed in the future)
