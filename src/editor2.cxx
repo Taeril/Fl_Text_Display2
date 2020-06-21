@@ -59,13 +59,13 @@ const int line_num_width = 75;
 Fl_Text_Buffer     *stylebuf = 0;
 Fl_Text_Display2::Style_Table_Entry
                    styletable[] = {	// Style table
-		     { FL_BLACK,      FL_COURIER,           TS }, // A - Plain
-		     { FL_DARK_GREEN, FL_HELVETICA_ITALIC,  TS }, // B - Line comments
-		     { FL_DARK_GREEN, FL_HELVETICA_ITALIC,  TS }, // C - Block comments
-		     { FL_BLUE,       FL_COURIER,           TS }, // D - Strings
-		     { FL_DARK_RED,   FL_COURIER,           TS }, // E - Directives
-		     { FL_DARK_RED,   FL_COURIER_BOLD,      TS }, // F - Types
-		     { FL_BLUE,       FL_COURIER_BOLD,      TS }, // G - Keywords
+		     { FL_BLACK,      FL_WHITE,     FL_COURIER,           TS }, // A - Plain
+		     { FL_DARK_GREEN, FL_YELLOW,    FL_HELVETICA_ITALIC,  TS }, // B - Line comments
+		     { FL_DARK_GREEN, FL_YELLOW,    FL_HELVETICA_ITALIC,  TS }, // C - Block comments
+		     { FL_WHITE,      FL_DARK_RED,  FL_COURIER,           TS }, // D - Strings
+		     { FL_DARK_RED,   FL_LIGHT1,    FL_COURIER,           TS }, // E - Directives
+		     { FL_DARK_RED,   FL_WHITE,     FL_COURIER_BOLD,      TS }, // F - Types
+		     { FL_BLUE,       FL_WHITE,     FL_COURIER_BOLD,      TS }, // G - Keywords
 		   };
 const char         *code_keywords[] = {	// List of known C/C++ keywords...
 		     "and",
