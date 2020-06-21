@@ -39,7 +39,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Text_Buffer.H>
-#include <FL/Fl_Text_Editor2.H>
+#include "FL/Fl_Text_Editor2.H"
 #include <FL/filename.H>
 
 int                changed = 0;
