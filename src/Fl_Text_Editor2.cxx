@@ -153,7 +153,7 @@ void Fl_Text_Editor2::add_default_key_bindings(Key_Binding** list) {
                     default_key_bindings[i].func,
                     list);
   }
-  Key_Binding *extra_key_bindings = Fl::screen_driver()->text_editor_extra_key_bindings;
+  Key_Binding *extra_key_bindings = (Fl_Text_Editor2::Key_Binding*)Fl::screen_driver()->text_editor_extra_key_bindings;
   if (extra_key_bindings) { // add platform-specific key bindings, if any
     for (int i = 0; extra_key_bindings[i].key; i++) {
       add_key_binding(extra_key_bindings[i].key,
