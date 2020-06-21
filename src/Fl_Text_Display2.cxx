@@ -2506,7 +2506,7 @@ int Fl_Text_Display2::position_style( int lineStartPos, int lineLen, int lineInd
 
   pos = lineStartPos + min( lineIndex, lineLen );
 
-  if ( lineIndex >= lineLen )
+  if ( lineIndex > lineLen )
     style = FILL_MASK;
   else if ( styleBuf != NULL ) {
     style = ( unsigned char ) styleBuf->byte_at( pos );
